@@ -17,7 +17,7 @@ module "instance" {
   pool_name       = "" # floating IP pool name    
 }
 
-# Output instance IP address
+# Output instance floating IP address
 output floating_ip {
   value = module.instance.floating_ip
 }
