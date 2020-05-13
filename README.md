@@ -6,6 +6,7 @@ A simple Terraform module to start an Ubuntu instance with Docker on OpenStack.
 ### Start an instance
 
 ```hcl
+# Create instance
 module "instance" {
   source  = "github.com/mcapuccini/terraform-openstack-docker"
   image_name      = "" # image name (should be Ubuntu or similar)
@@ -14,5 +15,10 @@ module "instance" {
   security_groups = [] # list of security groups
   network_name    = "" # network to attach to
   pool_name       = "" # floating IP pool name    
+}
+
+# Output instance IP address
+output floating_ip {
+  value = module.instance.floating_ip
 }
 ```
