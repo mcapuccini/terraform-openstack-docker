@@ -70,7 +70,7 @@ resource "null_resource" "new_volume" {
     inline = [
       "sudo mkdir /media/disk",
       var.volume_id == null ? "sudo mkfs.ext4 ${var.volume_device}" : "true",
-      "sudo mnt ${var.volume_device} /media/disk"
+      "sudo mount ${var.volume_device} /media/disk"
     ]
 
   }
