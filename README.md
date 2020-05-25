@@ -8,7 +8,7 @@ A simple Terraform module to start an Ubuntu instance with Docker on OpenStack.
 ```hcl
 # Create instance
 module "instance" {
-  source  = "github.com/mcapuccini/terraform-openstack-docker"
+  source          = "github.com/mcapuccini/terraform-openstack-docker"
   image_name      = "" # image name (should be Ubuntu or similar)
   flavor_name     = "" # instance flavor name
   keypair_name    = "" # your keypair name
@@ -17,8 +17,8 @@ module "instance" {
   pool_name       = "" # floating IP pool name    
 }
 
-# Output instance IP address
-output floating_ip {
+# Output instance floating IP address
+output "floating_ip" {
   value = module.instance.floating_ip
 }
 ```
