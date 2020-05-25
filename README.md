@@ -25,7 +25,7 @@ output "floating_ip" {
 
 ### Instance with a new volume
 
-```
+```hcl
 module "instance" {
   source          = "github.com/mcapuccini/terraform-openstack-docker"
   name            = "" # instance name
