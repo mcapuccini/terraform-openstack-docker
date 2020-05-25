@@ -23,3 +23,15 @@ variable "private_key_path" {
 variable "docker_version" {
   default = "19.03"
 }
+
+variable "new_volume_size" {
+  default = null
+}
+
+variable "volume_id" {
+  default = null
+}
+
+variable volume_device {
+  default = "/dev/vdb"
+}
