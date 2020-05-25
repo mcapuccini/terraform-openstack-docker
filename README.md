@@ -9,6 +9,7 @@ A simple Terraform module to start an Ubuntu instance with Docker on OpenStack.
 # Create instance
 module "instance" {
   source          = "github.com/mcapuccini/terraform-openstack-docker"
+  name            = "" # instance name
   image_name      = "" # image name (should be Ubuntu or similar)
   flavor_name     = "" # instance flavor name
   keypair_name    = "" # your keypair name
