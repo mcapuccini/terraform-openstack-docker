@@ -32,6 +32,10 @@ variable "volume_id" {
   default = null
 }
 
-variable volume_device {
+variable "volume_device" {
   default = "/dev/vdb"
+}
+
+variable "format_volume" {
+  default = false
 }
