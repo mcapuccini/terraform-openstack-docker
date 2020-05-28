@@ -56,7 +56,7 @@ resource "openstack_compute_volume_attach_v2" "attach" {
 
 resource "null_resource" "new_volume" {
   triggers = {
-    trigger = element(openstack_blockstorage_volume_v2.new.*.id, 0)
+    trigger = element(openstack_compute_volume_attach_v2.attach.*.id, 0)
   }
 
   provisioner "remote-exec" {
