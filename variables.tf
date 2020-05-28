@@ -39,3 +39,7 @@ variable "volume_device" {
 variable "format_volume" {
   default = false
 }
+
+variable "remote_user" {
+  default = "ubuntu"
+}

@@ -27,14 +27,14 @@ resource "null_resource" "install_docker" {
   provisioner "remote-exec" {
     connection {
       host        = openstack_networking_floatingip_v2.floating_ip.address
-      user        = "ubuntu"
+      user        = var.remote_user
       private_key = file(var.private_key_path)
     }
 
     inline = [
       "export DEBIAN_FRONTEND=noninteractive",
       "curl releases.rancher.com/install-docker/${var.docker_version}.sh | bash",
-      "sudo usermod -a -G docker ubuntu"
+      "sudo usermod -a -G docker ${var.remote_user}"
     ]
 
   }
@@ -63,7 +63,7 @@ resource "null_resource" "new_volume" {
   provisioner "remote-exec" {
     connection {
       host        = openstack_networking_floatingip_v2.floating_ip.address
-      user        = "ubuntu"
+      user        = var.remote_user
       private_key = file(var.private_key_path)
     }
 
