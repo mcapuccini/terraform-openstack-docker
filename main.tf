@@ -54,7 +54,7 @@ resource "openstack_compute_volume_attach_v2" "attach" {
   device      = var.volume_device
 }
 
-resource "null_resource" "new_volume" {
+resource "null_resource" "volume_provisioner" {
   triggers = {
     trigger = element(openstack_compute_volume_attach_v2.attach.*.id, 0)
   }
