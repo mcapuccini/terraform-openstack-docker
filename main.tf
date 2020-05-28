@@ -56,8 +56,7 @@ resource "openstack_compute_volume_attach_v2" "attach" {
 
 resource "null_resource" "new_volume" {
   triggers = {
-    ip     = openstack_compute_floatingip_associate_v2.associate.id,
-    attach = md5(join(",", openstack_compute_volume_attach_v2.attach.*.id))
+    trigger = md5(join(",", openstack_compute_volume_attach_v2.attach.*.id))
   }
 
   provisioner "remote-exec" {
