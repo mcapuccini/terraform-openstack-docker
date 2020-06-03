@@ -45,7 +45,7 @@ output floating_ip {
 }
 ```
 
-### Instance with and existing volume
+### Instance with an existing volume
 
 ```hcl
 module "instance" {
