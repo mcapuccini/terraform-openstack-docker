@@ -55,7 +55,7 @@ resource "openstack_compute_volume_attach_v2" "attach" {
   device      = var.volume_device
 
   provisioner "remote-exec" {
-    when = "destroy"
+    when = destroy
 
     connection {
       host        = openstack_networking_floatingip_v2.floating_ip.address
