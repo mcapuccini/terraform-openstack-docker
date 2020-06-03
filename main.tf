@@ -52,6 +52,20 @@ resource "openstack_compute_volume_attach_v2" "attach" {
   instance_id = openstack_compute_instance_v2.instance.id
   volume_id   = var.volume_id != null ? var.volume_id : element(openstack_blockstorage_volume_v2.new.*.id, 0)
   device      = var.volume_device
+
+  provisioner "remote-exec" {
+    connection {
+      host        = openstack_networking_floatingip_v2.floating_ip.address
+      user        = var.remote_user
+      private_key = file(var.private_key_path)
+    }
+
+    inline = [
+      "sudo umount /media/disk"
+    ]
+
+  }
+
 }
 
 resource "null_resource" "volume_provisioner" {
