@@ -48,30 +48,18 @@ resource "openstack_blockstorage_volume_v2" "new" {
 }
 
 resource "openstack_compute_volume_attach_v2" "attach" {
-  depends_on  = [openstack_networking_floatingip_v2.floating_ip]
   count       = var.volume_id != null || var.new_volume_size != null ? 1 : 0
   instance_id = openstack_compute_instance_v2.instance.id
   volume_id   = var.volume_id != null ? var.volume_id : element(openstack_blockstorage_volume_v2.new.*.id, 0)
   device      = var.volume_device
-
-  provisioner "remote-exec" {
-    when = destroy
-
-    connection {
-      host        = openstack_networking_floatingip_v2.floating_ip.address
-      user        = var.remote_user
-      private_key = file(var.private_key_path)
-    }
-
-    inline = [
-      "sudo umount /media/disk"
-    ]
-
-  }
-
 }
 
 resource "null_resource" "volume_provisioner" {
+  depends_on = [
+    openstack_compute_volume_attach_v2.attach, 
+    openstack_compute_floatingip_associate_v2.associate
+  ]
+
   triggers = {
     trigger = element(openstack_compute_volume_attach_v2.attach.*.id, 0)
   }
@@ -87,6 +75,21 @@ resource "null_resource" "volume_provisioner" {
       "sudo mkdir /media/disk",
       var.volume_id == null || var.format_volume ? "sudo mkfs.ext4 -F ${var.volume_device}" : "true",
       "sudo mount ${var.volume_device} /media/disk"
+    ]
+
+  }
+
+  provisioner "remote-exec" {
+    when = destroy
+
+    connection {
+      host        = openstack_networking_floatingip_v2.floating_ip.address
+      user        = var.remote_user
+      private_key = file(var.private_key_path)
+    }
+
+    inline = [
+      "sudo umount /media/disk"
     ]
 
   }
