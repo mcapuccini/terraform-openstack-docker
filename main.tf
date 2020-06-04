@@ -55,6 +55,8 @@ resource "openstack_compute_volume_attach_v2" "attach" {
 }
 
 resource "null_resource" "volume_provisioner" {
+  count = length(openstack_compute_volume_attach_v2.attach.*.id) > 0 ? 1 : 0
+
   depends_on = [
     openstack_compute_volume_attach_v2.attach, 
     openstack_compute_floatingip_associate_v2.associate
